@@ -1,0 +1,284 @@
+{
+  "metrics": {
+    "total_questions": 10,
+    "successful_runs": 10,
+    "errored_runs": 0,
+    "answer_match_rate": 1.0,
+    "avg_confidence": 0.35,
+    "avg_attempts": 1.7,
+    "median_latency_s": 12.151737093925476,
+    "p95_latency_s": 24.945344924926758,
+    "route_distribution": {
+      "simple": 0,
+      "multi_hop": 10
+    }
+  },
+  "results": [
+    {
+      "id": "q01",
+      "query": "What threat actors are mentioned in these reports?",
+      "expected_substrings": [
+        "actor",
+        "group"
+      ],
+      "answer": "Based on the provided Unit 42 excerpts, the following threat actors are mentioned:\n\n**Threat Actor Groups:**\n- Academic Serpens [unit42_001_from-linear-to-complex-an-upgrade-in-ransomhouse-encryption]\n- Agent Serpens [unit42_001_from-linear-to-complex-an-upgrade-in-ransomhouse-encryption]\n- Agonizing Serpens [unit42_001_from-linear-to-complex-an-upgrade-in-ransomhouse-encryption]\n- Bookworm [unit42_001_from-linear-to-complex-an-upgrade-in-ransomhouse-encryption]\n\nThe excerpts also reference \"Payroll Pirates\" in relation to social engineering attacks [unit42_002_stay-secure-why-cyber-hygiene-should-be-part-of-your-persona].\n\nAdditionally, the context mentions that Unit 42 tracks threat actor groups using a constellation schema and attribution framework [unit42_001_from-linear-to-complex-an-upgrade-in-ransomhouse-encryption], with a reference to a comprehensive list updated as of August 1, 2025.",
+      "citations": [
+        "unit42_002_stay-secure-why-cyber-hygiene-should-be-part-of-your-persona",
+        "unit42_001_from-linear-to-complex-an-upgrade-in-ransomhouse-encryption"
+      ],
+      "reranked_docs": [
+        "unit42_001_from-linear-to-complex-an-upgrade-in-ransomhouse-encryption",
+        "unit42_001_from-linear-to-complex-an-upgrade-in-ransomhouse-encryption",
+        "unit42_005_who-does-cybersecurity-need-you",
+        "unit42_001_from-linear-to-complex-an-upgrade-in-ransomhouse-encryption",
+        "unit42_002_stay-secure-why-cyber-hygiene-should-be-part-of-your-persona"
+      ],
+      "confidence": 0.3,
+      "attempts": 2,
+      "route": "multi_hop",
+      "rewritten": "Which Advanced Persistent Threats, malicious groups, cybercriminals, and threat actors are referenced in these threat intelligence reports?",
+      "answer_match": true,
+      "latency": 18.378201007843018,
+      "error": null
+    },
+    {
+      "id": "q02",
+      "query": "What CVEs or vulnerabilities are discussed?",
+      "expected_substrings": [
+        "CVE",
+        "vulnerability"
+      ],
+      "answer": "The provided Unit 42 reports discuss the following CVEs and vulnerabilities:\n\n**Cisco ASA and FTD vulnerabilities [unit42_003_threat-insights-active-exploitation-of-cisco-asa-zero-days]:**\n- **CVE-2025-20333** - Currently under active exploitation; allows arbitrary code execution, data exfiltration, and persistent malware implantation\n- **CVE-2025-20362** - Currently under active exploitation; allows arbitrary code execution, data exfiltration, and persistent malware implantation  \n- **CVE-2025-20363** - Identified as high risk for imminent exploitation\n\n**Other vulnerabilities mentioned:**\n- **CVE-2025-0921** - Privileged File System Vulnerability in an ICONICS SCADA system [unit42_004_threat-brief-salesloft-drift-integration-used-to-compromise]\n- **CVE-2026-1281 and CVE-2026-1340** - Critical vulnerabilities in Ivanti EPMM that were exploited [unit42_004_threat-brief-salesloft-drift-integration-used-to-compromise]\n\nThe Cisco vulnerabilities are described in the most detail, with all three being critical severity issues in ASA and FTD products.",
+      "citations": [
+        "unit42_003_threat-insights-active-exploitation-of-cisco-asa-zero-days",
+        "unit42_004_threat-brief-salesloft-drift-integration-used-to-compromise"
+      ],
+      "reranked_docs": [
+        "unit42_005_who-does-cybersecurity-need-you",
+        "unit42_003_threat-insights-active-exploitation-of-cisco-asa-zero-days",
+        "unit42_004_threat-brief-salesloft-drift-integration-used-to-compromise",
+        "unit42_002_stay-secure-why-cyber-hygiene-should-be-part-of-your-persona",
+        "unit42_003_threat-insights-active-exploitation-of-cisco-asa-zero-days"
+      ],
+      "confidence": 0.85,
+      "attempts": 1,
+      "route": "multi_hop",
+      "rewritten": "What Common Vulnerabilities and Exposures, security flaws, or weaknesses are discussed in threat intelligence reports?",
+      "answer_match": true,
+      "latency": 9.361477136611938,
+      "error": null
+    },
+    {
+      "id": "q03",
+      "query": "What malware families are described?",
+      "expected_substrings": [
+        "malware",
+        "ransom"
+      ],
+      "answer": "The provided Unit 42 reports describe the following malware families:\n\n1. **RayInitiator** - A multi-stage Grand Unified Bootloader (GRUB) bootkit that services reboots and firmware upgrades, and deploys the LINE VIPER shellcode loader to Cisco ASA 5500-X series devices without secure boot [unit42_003_threat-insights-active-exploitation-of-cisco-asa-zero-days]\n\n2. **LINE VIPER** - A shellcode loader that is loaded into memory by RayInitiator and receives command and control instructions over WebVPN client authentication sessions over HTTPS or via ICMP with responses over raw TCP [unit42_003_threat-insights-active-exploitation-of-cisco-asa-zero-days]\n\n3. **RansomHouse** - Referenced in relation to ESXi encryption [unit42_001_from-linear-to-complex-an-upgrade-in-ransomhouse-encryption]\n\n4. **BlackSuit ransomware** - Distributed by the threat actor Ignoble Scorpius [unit42_001_from-linear-to-complex-an-upgrade-in-ransomhouse-encryption]\n\n5. **Akira ransomware** - Associated with the threat actor Howling Scorpius [unit42_001_from-linear-to-complex-an-upgrade-in-ransomhouse-encryption]",
+      "citations": [
+        "unit42_003_threat-insights-active-exploitation-of-cisco-asa-zero-days",
+        "unit42_001_from-linear-to-complex-an-upgrade-in-ransomhouse-encryption"
+      ],
+      "reranked_docs": [
+        "unit42_003_threat-insights-active-exploitation-of-cisco-asa-zero-days",
+        "unit42_005_who-does-cybersecurity-need-you",
+        "unit42_001_from-linear-to-complex-an-upgrade-in-ransomhouse-encryption",
+        "unit42_003_threat-insights-active-exploitation-of-cisco-asa-zero-days",
+        "unit42_001_from-linear-to-complex-an-upgrade-in-ransomhouse-encryption"
+      ],
+      "confidence": 0.65,
+      "attempts": 2,
+      "route": "multi_hop",
+      "rewritten": "What malware families, variants, and software threats are described or documented in threat intelligence reports?",
+      "answer_match": true,
+      "latency": 24.945344924926758,
+      "error": null
+    },
+    {
+      "id": "q04",
+      "query": "What detection or mitigation steps are recommended?",
+      "expected_substrings": [
+        "detect",
+        "mitigat",
+        "recommend"
+      ],
+      "answer": "Based on the provided excerpts, the recommended detection and mitigation steps include:\n\n**For Cisco ASA Zero-Days:**\n- Patch immediately [unit42_003_threat-insights-active-exploitation-of-cisco-asa-zero-days]\n- For vulnerable devices unable to be updated, follow Cisco's temporary mitigation guidance, which includes disabling SSL/TLS-based VPN web services (though these temporary mitigations carry their own risks) [unit42_003_threat-insights-active-exploitation-of-cisco-asa-zero-days]\n- Review advisories for further information about the campaign and detecting this activity [unit42_003_threat-insights-active-exploitation-of-cisco-asa-zero-days]\n\n**For Ransomware Threats:**\n- Adopt more dynamic, adaptive strategies capable of countering the next generation of complex and evasive threats [unit42_001_from-linear-to-complex-an-upgrade-in-ransomhouse-encryption]\n\nThe excerpts note that Palo Alto Networks customers are better protected through their products, though specific product details are not provided in these excerpts [unit42_001_from-linear-to-complex-an-upgrade-in-ransomhouse-encryption].",
+      "citations": [
+        "unit42_003_threat-insights-active-exploitation-of-cisco-asa-zero-days",
+        "unit42_001_from-linear-to-complex-an-upgrade-in-ransomhouse-encryption"
+      ],
+      "reranked_docs": [
+        "unit42_003_threat-insights-active-exploitation-of-cisco-asa-zero-days",
+        "unit42_002_stay-secure-why-cyber-hygiene-should-be-part-of-your-persona",
+        "unit42_003_threat-insights-active-exploitation-of-cisco-asa-zero-days",
+        "unit42_005_who-does-cybersecurity-need-you",
+        "unit42_001_from-linear-to-complex-an-upgrade-in-ransomhouse-encryption"
+      ],
+      "confidence": 0.85,
+      "attempts": 1,
+      "route": "multi_hop",
+      "rewritten": "What detection methods, mitigation strategies, remediation steps, or defensive measures are recommended for threats, malware, vulnerabilities, or adversary tactics?",
+      "answer_match": true,
+      "latency": 8.581384897232056,
+      "error": null
+    },
+    {
+      "id": "q05",
+      "query": "What types of victims or targets are mentioned?",
+      "expected_substrings": [
+        "target",
+        "victim",
+        "organization"
+      ],
+      "answer": "The provided Unit 42 reports don't contain enough information to answer that.\n\nThe excerpts discuss a Salesloft Drift integration compromise affecting Salesforce environments [unit42_004_threat-brief-salesloft-drift-integration-used-to-compromise], but they do not specify particular victim types, industries, or target profiles beyond referring generally to \"organizations\" and \"customers\" using these platforms.",
+      "citations": [
+        "unit42_004_threat-brief-salesloft-drift-integration-used-to-compromise"
+      ],
+      "reranked_docs": [
+        "unit42_004_threat-brief-salesloft-drift-integration-used-to-compromise",
+        "unit42_001_from-linear-to-complex-an-upgrade-in-ransomhouse-encryption",
+        "unit42_004_threat-brief-salesloft-drift-integration-used-to-compromise",
+        "unit42_004_threat-brief-salesloft-drift-integration-used-to-compromise",
+        "unit42_004_threat-brief-salesloft-drift-integration-used-to-compromise"
+      ],
+      "confidence": 0.0,
+      "attempts": 2,
+      "route": "multi_hop",
+      "rewritten": "What types of victims, targets, or affected entities are mentioned in common vulnerabilities and exposures incidents, indicators of compromise findings, and advanced persistent threat campaigns?",
+      "answer_match": true,
+      "latency": 14.561617136001587,
+      "error": null
+    },
+    {
+      "id": "q06",
+      "query": "What attack techniques or TTPs are described?",
+      "expected_substrings": [
+        "technique",
+        "exploit",
+        "attack"
+      ],
+      "answer": "The provided Unit 42 reports don't contain enough information to answer that.\n\nThe excerpts provided are primarily navigational elements, article headers, and general content about cybersecurity careers and threat actor tracking methodology. They do not contain specific technical details about attack techniques or TTPs (Tactics, Techniques, and Procedures).",
+      "citations": [],
+      "reranked_docs": [
+        "unit42_005_who-does-cybersecurity-need-you",
+        "unit42_005_who-does-cybersecurity-need-you",
+        "unit42_002_stay-secure-why-cyber-hygiene-should-be-part-of-your-persona",
+        "unit42_001_from-linear-to-complex-an-upgrade-in-ransomhouse-encryption",
+        "unit42_001_from-linear-to-complex-an-upgrade-in-ransomhouse-encryption"
+      ],
+      "confidence": 0.0,
+      "attempts": 2,
+      "route": "multi_hop",
+      "rewritten": "What attack techniques, tactics, procedures, threat actor methods, or adversary behaviors are described in threat intelligence reports?",
+      "answer_match": true,
+      "latency": 13.575035095214844,
+      "error": null
+    },
+    {
+      "id": "q07",
+      "query": "What network indicators or IoCs are reported?",
+      "expected_substrings": [
+        "indicator",
+        "IoC",
+        "domain",
+        "IP"
+      ],
+      "answer": "The provided Unit 42 reports contain the following network indicators and IoCs:\n\n**File Hashes (RansomHouse-related):**\n- SHA256: 0fe7fcc66726f8f2daed29b807d1da3c531ec004925625855f8889950d0d24d8 (upgraded Mario version)\n- SHA256: d36afcfe1ae2c3e6669878e6f9310a04fb6c8af525d17c4ffa8b510459d7dd4d (original Mario version)\n- SHA256: 26b3c1269064ba1bf2bfdcf2d3d069e939f0e54fc4189e5a5263a49e17872f2a (MrAgent sample)\n- SHA256: 8189c708706eb7302d7598aeee8cd6bdb048bf1a6dbe29c59e50f0a39fd53973 (MrAgent sample)\n[unit42_001_from-linear-to-complex-an-upgrade-in-ransomhouse-encryption]\n\n**IP Addresses (Salesloft incident):**\nSalesloft made IoCs available including IP addresses, though many are noted to be Tor exit nodes with potentially high false positive rates [unit42_004_threat-brief-salesloft-drift-integration-used-to-compromise]. The specific IP addresses are referenced in Salesloft's trust notification but not listed in the provided excerpts.",
+      "citations": [
+        "unit42_004_threat-brief-salesloft-drift-integration-used-to-compromise",
+        "unit42_001_from-linear-to-complex-an-upgrade-in-ransomhouse-encryption"
+      ],
+      "reranked_docs": [
+        "unit42_001_from-linear-to-complex-an-upgrade-in-ransomhouse-encryption",
+        "unit42_004_threat-brief-salesloft-drift-integration-used-to-compromise",
+        "unit42_004_threat-brief-salesloft-drift-integration-used-to-compromise",
+        "unit42_001_from-linear-to-complex-an-upgrade-in-ransomhouse-encryption",
+        "unit42_005_who-does-cybersecurity-need-you"
+      ],
+      "confidence": 0.85,
+      "attempts": 1,
+      "route": "multi_hop",
+      "rewritten": "What network indicators of compromise or artifacts are reported by threat intelligence sources regarding malicious activity?",
+      "answer_match": true,
+      "latency": 9.839162826538086,
+      "error": null
+    },
+    {
+      "id": "q08",
+      "query": "What persistence mechanisms do attackers use?",
+      "expected_substrings": [
+        "persistence",
+        "stealth"
+      ],
+      "answer": "The provided Unit 42 reports don't contain enough information to answer that. \n\nWhile the excerpts mention that MrAgent \"provides attackers with persistent access to a victim's environment\" [unit42_001_from-linear-to-complex-an-upgrade-in-ransomhouse-encryption], the specific persistence mechanisms used by the tool are not detailed in the available context.",
+      "citations": [
+        "unit42_001_from-linear-to-complex-an-upgrade-in-ransomhouse-encryption"
+      ],
+      "reranked_docs": [
+        "unit42_001_from-linear-to-complex-an-upgrade-in-ransomhouse-encryption",
+        "unit42_001_from-linear-to-complex-an-upgrade-in-ransomhouse-encryption",
+        "unit42_004_threat-brief-salesloft-drift-integration-used-to-compromise",
+        "unit42_004_threat-brief-salesloft-drift-integration-used-to-compromise",
+        "unit42_001_from-linear-to-complex-an-upgrade-in-ransomhouse-encryption"
+      ],
+      "confidence": 0.0,
+      "attempts": 2,
+      "route": "multi_hop",
+      "rewritten": "What persistence mechanisms and techniques do threat actors employ for maintaining access to compromised systems?",
+      "answer_match": true,
+      "latency": 14.611252784729004,
+      "error": null
+    },
+    {
+      "id": "q09",
+      "query": "What is the meaning of life?",
+      "expected_substrings": [
+        "don't contain",
+        "not enough",
+        "no information"
+      ],
+      "answer": "The provided Unit 42 reports don't contain enough information to answer that.",
+      "citations": [],
+      "reranked_docs": [
+        "unit42_005_who-does-cybersecurity-need-you",
+        "unit42_001_from-linear-to-complex-an-upgrade-in-ransomhouse-encryption",
+        "unit42_005_who-does-cybersecurity-need-you",
+        "unit42_005_who-does-cybersecurity-need-you",
+        "unit42_005_who-does-cybersecurity-need-you"
+      ],
+      "confidence": 0.0,
+      "attempts": 2,
+      "route": "multi_hop",
+      "rewritten": "What are the definitions and explanations of life's purpose, meaning, and existential significance?",
+      "answer_match": true,
+      "latency": 10.433931112289429,
+      "error": null
+    },
+    {
+      "id": "q10",
+      "query": "What is Anthropic's revenue in 2025?",
+      "expected_substrings": [
+        "don't contain",
+        "not enough",
+        "no information"
+      ],
+      "answer": "The provided Unit 42 reports don't contain enough information to answer that.",
+      "citations": [],
+      "reranked_docs": [
+        "unit42_005_who-does-cybersecurity-need-you",
+        "unit42_001_from-linear-to-complex-an-upgrade-in-ransomhouse-encryption",
+        "unit42_005_who-does-cybersecurity-need-you",
+        "unit42_002_stay-secure-why-cyber-hygiene-should-be-part-of-your-persona",
+        "unit42_003_threat-insights-active-exploitation-of-cisco-asa-zero-days"
+      ],
+      "confidence": 0.0,
+      "attempts": 2,
+      "route": "multi_hop",
+      "rewritten": "What is Anthropic's financial revenue projections earnings forecasts 2025?",
+      "answer_match": true,
+      "latency": 10.728439092636108,
+      "error": null
+    }
+  ]
+}

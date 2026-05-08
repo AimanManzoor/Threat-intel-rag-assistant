@@ -1,0 +1,10 @@
+{"id": "q01", "query": "What threat actors are mentioned in these reports?", "expected_substrings": ["actor", "group"]}
+{"id": "q02", "query": "What CVEs or vulnerabilities are discussed?", "expected_substrings": ["CVE", "vulnerability"]}
+{"id": "q03", "query": "What malware families are described?", "expected_substrings": ["malware", "ransom"]}
+{"id": "q04", "query": "What detection or mitigation steps are recommended?", "expected_substrings": ["detect", "mitigat", "recommend"]}
+{"id": "q05", "query": "What types of victims or targets are mentioned?", "expected_substrings": ["target", "victim", "organization"]}
+{"id": "q06", "query": "What attack techniques or TTPs are described?", "expected_substrings": ["technique", "exploit", "attack"]}
+{"id": "q07", "query": "What network indicators or IoCs are reported?", "expected_substrings": ["indicator", "IoC", "domain", "IP"]}
+{"id": "q08", "query": "What persistence mechanisms do attackers use?", "expected_substrings": ["persistence", "stealth"]}
+{"id": "q09", "query": "What is the meaning of life?", "expected_substrings": ["don't contain", "not enough", "no information"]}
+{"id": "q10", "query": "What is Anthropic's revenue in 2025?", "expected_substrings": ["don't contain", "not enough", "no information"]}
