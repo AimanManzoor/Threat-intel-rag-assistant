@@ -222,3 +222,5 @@ __marimo__/
 data/raw/
 .DS_Store
 .ipynb_checkpoints/
+data/chroma_db/
+data/chroma_db/
