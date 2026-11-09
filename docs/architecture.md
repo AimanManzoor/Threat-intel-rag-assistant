@@ -12,24 +12,24 @@ The system is a LangGraph `StateGraph` with seven nodes and two conditional edge
 | Stage | Model | Purpose |
 |---|---|---|
 | `rewrite_query` | Haiku | Expand cybersec acronyms (CVE, IoC, TTP), add synonyms |
-| `route` | Haiku | Classify simple vs multi-hop |
+| `route` | No LLM | Select the implemented simple retrieval path |
 | `retrieve` | (no LLM) | Cohere similarity search, top-20 candidates |
-| `tool_use` | (stub) | Multi-hop placeholder — falls back to retrieve in v0.1 |
+| `tool_use` | Inactive stub | Reserved for future multi-hop implementation |
 | `rerank` | Cohere `rerank-english-v3.0` | Cross-encoder narrows top-20 → top-5 |
 | `generate` | Sonnet | Grounded answer with inline source citations |
 | `self_check` | Haiku | Score groundedness 0.0-1.0; triggers retry below 0.7 |
 
-**Cost design:** ~80% of LLM calls use Haiku; only generation uses Sonnet.
+**Model assignment:** Haiku handles rewriting and self-checking; Sonnet generates answers. Routing no longer calls an LLM.
 
 ## Why LangGraph instead of LCEL
 
 Three features required graph semantics:
 
-1. **Conditional routing** — `route` branches between `retrieve` and `tool_use` based on a runtime LLM classification.
+1. **Workflow control** — the current baseline uses the simple path; the reserved multi-hop branch remains inactive.
 2. **Cycles** — the `self_check → rewrite_query` retry edge requires graph topology; LCEL is acyclic.
 3. **Shared mutable state** — every node reads and writes the full `RAGState` TypedDict, so the retriever's chunks remain in scope at the self-check step.
 
-## Measured results (v0.1, 10-question eval)
+## Historical baseline results (before routing correction)
 
 | Metric | Value |
 |---|---|
@@ -47,7 +47,7 @@ Full results: [`eval/results.json`](../eval/results.json). Summary: [`eval/summa
 
 ## Honest weaknesses and v0.2 roadmap
 
-**1. Router miscalibration.** All 10 queries classified as `multi_hop`, including simple lookups. The fallback to `retrieve` masks the issue but wastes tokens. **Fix:** add 4-6 few-shot examples to the routing prompt and re-measure route_distribution.
+**1. Routing baseline corrected.** The unsupported multi-hop selection was disabled and the unnecessary router-model call removed. Real dependent multi-hop retrieval remains future work.
 
 **2. Loose answer-match metric.** Expected substrings in v0.1 are domain-generic ("CVE", "actor"). **Fix:** rewrite expected_substrings as specific entities (threat actor names, CVE numbers, exact tool names) and add a `expected_doc_ids` field for retrieval-quality measurement.
 
@@ -84,3 +84,19 @@ python src/build_index.py           # build dual Chroma indices
 python -m src.graph "your question" # ad-hoc query
 python -m eval.run_eval             # full 10-question eval
 ```
+
+
+## Routing correction and offline checks
+
+The current route selects `simple` without a router LLM call.
+The multi-hop node is a reserved stub and is not selected by this baseline.
+Answer checking still permits two total attempts; reaching that cap does not guarantee correctness.
+
+Run offline checks: `python -m unittest discover -s tests -v`.
+These use the actual graph wiring and route function with controlled external nodes.
+They verify routing, retry bounds and recorder checkpointing without API calls.
+
+`eval/run_verified.py` records fresh answers and their generation-context chunks.
+Its generated `eval/verification_*.json` reports remain local.
+The committed evaluation summary is a historical baseline: generic keyword matches are not factual-accuracy measurements.
+Corpus cleanup, strict citation IDs, rate-limit backoff and stronger answer evaluation remain pending.

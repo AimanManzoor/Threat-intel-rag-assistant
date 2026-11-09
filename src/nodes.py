@@ -35,16 +35,9 @@ def rewrite_query(state):
     return {"rewritten": r.content.strip()}
 
 
-ROUTE_PROMPT = """Classify a threat-intel query:
-- "simple": single-report lookup
-- "multi_hop": needs multiple reports or comparison
-Output: simple OR multi_hop.
-
-Query: {query}"""
 
 def route(state):
-    r = _haiku.invoke([HumanMessage(content=ROUTE_PROMPT.format(query=state["rewritten"]))])
-    return {"route": "multi_hop" if "multi" in r.content.lower() else "simple"}
+    return {"route": "simple"}
 
 
 def retrieve(state):

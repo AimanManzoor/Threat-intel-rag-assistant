@@ -6,12 +6,12 @@ Self-correcting Retrieval-Augmented Generation pipeline over Unit 42 threat inte
 
 ## Highlights (v0.1)
 
-- LangGraph StateGraph with conditional routing and bounded retry loops
+- LangGraph workflow with deterministic simple retrieval and bounded answer-check retries
 - Sitemap-driven scraper for Unit 42 (robots.txt-respecting, polite rate-limiting, raw HTML + processed markdown separation)
 - Dual-collection ablation infrastructure (vanilla + contextual Chroma indices)
 - Cohere `embed-english-v3.0` + `rerank-english-v3.0` for retrieval and reranking
 - 10-question domain-specific evaluation harness with measured metrics
-- 100% answer match on labeled eval · 0 errors · correct refusal on out-of-corpus queries
+- Initial evaluation and evidence-recording workflow; factual correctness, citation validation and rate-limit handling remain under improvement
 
 ## v0.2 In Progress
 
@@ -65,3 +65,19 @@ This is a domain transfer of [Advanced_Rag_LangGraph](https://github.com/AimanMa
 ## License
 
 MIT
+
+
+## Routing correction and offline checks
+
+The current route selects `simple` without a router LLM call.
+The multi-hop node is a reserved stub and is not selected by this baseline.
+Answer checking still permits two total attempts; reaching that cap does not guarantee correctness.
+
+Run offline checks: `python -m unittest discover -s tests -v`.
+These use the actual graph wiring and route function with controlled external nodes.
+They verify routing, retry bounds and recorder checkpointing without API calls.
+
+`eval/run_verified.py` records fresh answers and their generation-context chunks.
+Its generated `eval/verification_*.json` reports remain local.
+The committed evaluation summary is a historical baseline: generic keyword matches are not factual-accuracy measurements.
+Corpus cleanup, strict citation IDs, rate-limit backoff and stronger answer evaluation remain pending.
