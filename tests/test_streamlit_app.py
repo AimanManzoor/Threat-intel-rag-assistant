@@ -18,6 +18,9 @@ def button(app, label):
 class StreamlitAppTests(unittest.TestCase):
     def setUp(self):
         st.cache_resource.clear()
+        dotenv = patch("dotenv.load_dotenv")
+        dotenv.start()
+        self.addCleanup(dotenv.stop)
         environment = patch.dict(os.environ, {
             "ANTHROPIC_API_KEY": "test-a", "COHERE_API_KEY": "test-c",
         })
