@@ -26,6 +26,31 @@ Python · LangGraph · LangChain · Anthropic Claude (Haiku 4.5 + Sonnet 4.5) ·
 
 ## Quick start
 
+### Streamlit interface
+
+The repository includes `app.py`, a Threat Intel interface for the current graph.
+It replaces the locally copied Helios Solar labels, links, examples, and unsupported
+accuracy caption. It displays model self-scores separately from measured accuracy,
+retains results across UI reruns, exposes the full retrieved excerpts, and flags
+citation IDs that do not exactly match those excerpts' source IDs.
+
+After installing dependencies and configuring local API keys:
+
+```bash
+python -m streamlit run app.py --server.address 127.0.0.1
+```
+
+The app reuses a nonempty local `contextual` collection. If no usable index exists,
+it waits for an explicit **Initialize search index** click before making Cohere
+embedding calls. This hosted bootstrap embeds plain excerpts from `data/processed/`
+without LLM context generation. Cloud storage resets can require initialization
+again. Initialization and questions use the configured provider APIs.
+
+See [Streamlit deployment](docs/streamlit_deployment.md) for setup, secret handling,
+index lifecycle, validation limits, and the hosted verification checklist.
+
+### CLI setup
+
 ```bash
 git clone https://github.com/AimanManzoor/Threat-intel-rag-assistant.git
 cd Threat-intel-rag-assistant
@@ -81,3 +106,4 @@ They verify routing, retry bounds and recorder checkpointing without API calls.
 Its generated `eval/verification_*.json` reports remain local.
 The committed evaluation summary is a historical baseline: generic keyword matches are not factual-accuracy measurements.
 Corpus cleanup, strict citation IDs, rate-limit backoff and stronger answer evaluation remain pending.
+
