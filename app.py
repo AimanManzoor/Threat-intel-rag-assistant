@@ -1,5 +1,6 @@
 """Streamlit interface for the Threat-Intel RAG Assistant."""
 import streamlit as st
+from src.citations import assess_citations
 from dotenv import load_dotenv
 from src.app_runtime import ROOT, configure_credentials, index_count, initialize_index
 
@@ -81,8 +82,26 @@ if submitted:
 
 result = st.session_state.get("result")
 if result:
-    st.subheader("Answer")
-    st.write(result.get("answer", "No answer returned."))
+    validation = assess_citations(
+        result.get("answer", ""),
+        result.get("reranked", []),
+        result.get("citations"),
+    )
+    if validation["status"] == "matched_ids":
+        st.subheader("Answer")
+        st.write(result.get("answer", "No answer returned."))
+    else:
+        st.subheader("Answer requires review")
+        st.warning(
+            "Citation check: " + validation["status"] +
+            ". Inspect the candidate and source excerpts before relying on it."
+        )
+        with st.expander("Inspect unverified candidate answer"):
+            st.write(result.get("answer", "No answer returned."))
+    st.caption(
+        "Matching citation IDs checks reference membership only; "
+        "it does not prove that the sources support each claim."
+    )
     columns = st.columns(4)
     columns[0].metric("Route", result.get("route", "unknown"))
     columns[1].metric("Model self-score", f"{result.get('confidence', 0.0):.2f}")

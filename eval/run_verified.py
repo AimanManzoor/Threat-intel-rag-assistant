@@ -10,7 +10,7 @@ def capture_run(app, questions, output):
         "run_time_utc": datetime.now(timezone.utc).isoformat(),
         "source_hashes": {
             name: hashlib.sha256(Path(name).read_bytes()).hexdigest()
-            for name in ["src/graph.py", "src/nodes.py", "eval/questions.jsonl"]
+            for name in ["src/graph.py", "src/nodes.py", "src/citations.py", "eval/questions.jsonl"]
         },
         "results": [],
     }
@@ -22,7 +22,7 @@ def capture_run(app, questions, output):
         try:
             r = app.invoke({"query": q["query"], "attempts": 0})
             row.update({key: r.get(key) for key in [
-                "answer", "citations", "route", "rewritten", "attempts", "confidence"
+                "answer", "citations", "route", "rewritten", "attempts", "confidence", "citation_validation"
             ]})
 
             row["evidence_chunks"] = [{

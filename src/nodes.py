@@ -1,6 +1,5 @@
 """Graph nodes — six pure functions on RAGState."""
 from pathlib import Path
-import re
 
 from dotenv import load_dotenv
 from langchain_anthropic import ChatAnthropic
@@ -9,6 +8,7 @@ from langchain_cohere import CohereEmbeddings, CohereRerank
 from langchain_core.messages import HumanMessage
 
 from src.state import RAGState
+from src.citations import extract_citation_ids
 
 load_dotenv()
 CHROMA_DIR = Path(__file__).parent.parent / "data" / "chroma_db"
@@ -72,7 +72,7 @@ def generate(state):
         for c in chunks
     ])
     r = _sonnet.invoke([HumanMessage(content=GENERATE_PROMPT.format(context=context_text, query=state["query"]))])
-    citations = list(set(re.findall(r"\[([\w_-]+)\]", r.content)))
+    citations = extract_citation_ids(r.content)
     return {"answer": r.content.strip(), "citations": citations}
 
 

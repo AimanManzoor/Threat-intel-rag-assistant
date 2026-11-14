@@ -2,6 +2,7 @@
 from langgraph.graph import StateGraph, START, END
 
 from src.state import RAGState
+from src.citations import validate_citations
 from src.nodes import rewrite_query, route as route_node, retrieve, rerank, generate, self_check, tool_use
 
 
@@ -26,6 +27,7 @@ def build_graph():
     g.add_node("rerank", rerank)
     g.add_node("generate", generate)
     g.add_node("self_check", self_check)
+    g.add_node("validate_citations", validate_citations)
 
     g.add_edge(START, "rewrite_query")
     g.add_edge("rewrite_query", "route")
@@ -34,7 +36,8 @@ def build_graph():
     g.add_edge("tool_use", "rerank")
     g.add_edge("rerank", "generate")
     g.add_edge("generate", "self_check")
-    g.add_conditional_edges("self_check", confidence_branch, {"retry": "rewrite_query", "done": END})
+    g.add_conditional_edges("self_check", confidence_branch, {"retry": "rewrite_query", "done": "validate_citations"})
+    g.add_edge("validate_citations", END)
     return g.compile()
 
 
@@ -50,6 +53,7 @@ if __name__ == "__main__":
     print("FINAL ANSWER")
     print("=" * 60)
     print(result.get("answer", "(none)"))
+    print("Citation validation:", result.get("citation_validation", {}))
     print(f"\nRoute:       {result.get('route', '?')}")
     print(f"Citations:   {result.get('citations', [])}")
     print(f"Confidence:  {result.get('confidence', 0.0):.2f}")

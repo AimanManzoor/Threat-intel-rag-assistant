@@ -111,6 +111,23 @@ class StreamlitAppTests(unittest.TestCase):
         page = self.ask(self.page())
         self.assertTrue(any("do not exactly match" in warning.value for warning in page.warning))
 
+    def test_uncited_answer_requires_review_even_with_high_self_score(self):
+        self.graph.invoke.return_value.update(
+            answer="An uncited claim", citations=[], confidence=1.0
+        )
+        page = self.ask(self.page())
+        self.assertIn(
+            "Answer requires review",
+            [item.value for item in page.subheader],
+        )
+        self.assertTrue(any(
+            "missing_citations" in item.value for item in page.warning
+        ))
+        self.assertTrue(any(
+            item.label == "Inspect unverified candidate answer"
+            for item in page.expander
+        ))
+
     def test_index_open_error_is_displayed_and_query_is_disabled(self):
         self.count.side_effect = RuntimeError("PRIVATE_PATH")
         page = self.page()

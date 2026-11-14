@@ -11,6 +11,7 @@ class RAGState(TypedDict, total=False):
     reranked: List[Document]
     answer: str
     citations: List[str]
+    citation_validation: dict
     confidence: float
     attempts: int
     tool_calls: Optional[List[dict]]

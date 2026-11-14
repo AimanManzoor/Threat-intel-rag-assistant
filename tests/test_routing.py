@@ -114,6 +114,7 @@ class RoutingTests(unittest.TestCase):
         app.invoke.side_effect = [
             {
                 "answer": "supported answer",
+                "citation_validation": {"status": "matched_ids"},
                 "citations": ["doc1"],
                 "route": "simple",
                 "reranked": [document],
@@ -140,6 +141,11 @@ class RoutingTests(unittest.TestCase):
             saved["results"][0]["evidence_chunks"][0]["text"],
             "source evidence",
         )
+        self.assertEqual(
+            saved["results"][0]["citation_validation"]["status"],
+            "matched_ids",
+        )
+        self.assertIn("src/citations.py", saved["source_hashes"])
         self.assertEqual(saved["results"][1]["status_code"], 429)
         self.assertEqual(baseline.read_bytes(), before)
 

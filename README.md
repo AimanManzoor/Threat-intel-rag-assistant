@@ -13,10 +13,10 @@ Self-correcting Retrieval-Augmented Generation pipeline over Unit 42 threat inte
 - 10-question domain-specific evaluation harness with measured metrics
 - Initial evaluation and evidence-recording workflow; factual correctness, citation validation and rate-limit handling remain under improvement
 
-## v0.2 In Progress
+## Planned v0.2 extensions
 
 - Multi-agent architecture (supervisor + researcher + synthesizer + verifier) using LangGraph's supervisor pattern
-- Anthropic prompt caching for contextual retrieval (~90% cost reduction on long-form posts)
+- Potential Anthropic prompt caching for contextual retrieval (cost savings not measured in this project)
 - Expansion to full 50-document corpus
 - Hybrid BM25 + dense retrieval for CVE/IoC exact-match queries
 
@@ -105,5 +105,45 @@ They verify routing, retry bounds and recorder checkpointing without API calls.
 `eval/run_verified.py` records fresh answers and their generation-context chunks.
 Its generated `eval/verification_*.json` reports remain local.
 The committed evaluation summary is a historical baseline: generic keyword matches are not factual-accuracy measurements.
-Corpus cleanup, strict citation IDs, rate-limit backoff and stronger answer evaluation remain pending.
+Exact citation-ID validation is implemented. Corpus cleanup, rate-limit backoff and stronger factual-answer evaluation remain pending.
 
+
+
+## Exact citation-ID validation
+
+The graph runs a deterministic citation check after the final model self-check.
+It extracts bracketed IDs from the answer and compares them with exact source
+IDs from the reranked excerpts supplied to generation. It also checks consistency
+with the reported citation list. This adds no provider calls or retries.
+
+The result includes citation_validation with status, parsed citations,
+invalid IDs, and allowed source IDs.
+
+Statuses:
+- matched_ids
+- invalid_ids
+- inconsistent
+- missing_citations
+- no_sources
+
+Case and whitespace are not silently repaired.
+
+The Streamlit interface displays answers with citation problems as candidates
+requiring review. The original text remains available in an expander.
+CLI/API results preserve the candidate and include the validation report;
+callers must inspect that report before using an answer.
+
+Matching IDs establishes reference membership only. It does not establish
+factual correctness, claim support, retrieval relevance, or correct abstention.
+An uncited refusal can require review too; this check does not interpret refusals.
+
+The offline suite now contains 27 tests. Checks cover unknown and missing IDs,
+case and whitespace, full identifiers, inconsistent citation lists, and a high
+model self-score that still fails citation validation.
+
+Verification recordings retain the validation report and a fingerprint of
+the checker source. Historical evaluation files are unchanged.
+These tests do not establish a factual-accuracy score.
+
+Run checks:
+    python -m unittest discover -s tests -v
