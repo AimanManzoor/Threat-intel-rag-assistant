@@ -34,3 +34,6 @@ jobs:
 
       - name: Run regression tests
         run: python -m unittest discover -s tests -v
+
+      - name: Evaluate source-question reference cases
+        run: python -m eval.evaluate_graph_questions

@@ -32,6 +32,7 @@ def render_evidence_dashboard(root):
         graph = load_verified_graph(root)
     except (OSError, ValueError, UnicodeError):
         st.session_state.pop("evidence_graph_receipt", None)
+        st.session_state.pop("graph_question_result", None)
         st.error("Graph verification failed. Review the corpus and rebuild using src.build_evidence_graph.")
         return
     a, b, c = st.columns(3)
@@ -43,6 +44,9 @@ def render_evidence_dashboard(root):
         "first level-2 heading are excluded by a heuristic. Other report facts, "
         "malware, actors and the processed_full folder are not represented."
     )
+    from src.evidence_question_ui import render_question_search
+    render_question_search(root, graph["artifact_sha256"])
+
     by_id = {node["id"]: node for node in graph["nodes"]}
     options = sorted(by_id, key=lambda key: (by_id[key]["entity_type"] != "cve", key))
     with st.form("evidence_graph_form"):

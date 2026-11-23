@@ -24,6 +24,25 @@ LLM planner and multi-hop RAG answer generation are not implemented.
 
 See [scope, verification, Graphify rebuild and research limits](docs/evidence_graph.md).
 
+## Ask for CVE source reports
+
+In **Evidence graph (offline)**, use **Find source reports** with a question such
+as **Which reports mention CVE-2025-20333?** The deterministic adapter validates
+the request, submits a fixed one-hop plan to the harness and returns source-file,
+line and excerpt evidence.
+
+Unknown identifiers produce a scoped no-match response. Multiple CVEs, broader
+threat questions and extra instructions ask for clarification without tool calls.
+This is a narrow source-lookup baseline, not an LLM planner or general NLP system.
+
+CLI: `python -m src.evidence_question --question "Which reports mention CVE-2025-20333?"`
+
+Reference checks: `python -m eval.evaluate_graph_questions`.
+
+Validation: **54 regression tests and 15 controlled source-lookup reference cases**.
+No model accuracy or general language-understanding score is claimed.
+See [question contract, evaluation and limits](docs/evidence_questions.md).
+
 ## Highlights (v0.1)
 
 - LangGraph workflow with deterministic simple retrieval and bounded answer-check retries
@@ -157,7 +176,7 @@ Matching IDs establishes reference membership only. It does not establish
 factual correctness, claim support, retrieval relevance, or correct abstention.
 An uncited refusal can require review too; this check does not interpret refusals.
 
-The offline suite now contains 41 tests, including the evidence-graph harness and dashboard. Checks cover unknown and missing IDs,
+The offline suite now contains 54 tests, including the evidence-graph harness and dashboard. Checks cover unknown and missing IDs,
 case and whitespace, full identifiers, inconsistent citation lists, and a high
 model self-score that still fails citation validation.
 
