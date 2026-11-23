@@ -1,8 +1,28 @@
 # Threat-Intel RAG Assistant 🛡️
 
-Self-correcting Retrieval-Augmented Generation pipeline over Unit 42 threat intelligence content (Palo Alto Networks' threat research arm). Built with LangGraph, Anthropic Claude, and Cohere — engineered for cybersecurity-domain question answering with grounded citations to source reports.
+Retrieval-Augmented Generation prototype over Unit 42 threat intelligence reports. Built with LangGraph, Anthropic Claude and Cohere, with source-excerpt inspection, citation-ID checks and bounded answer-check retries. Factual support and answer quality require separate evaluation.
 
 **Read the [architecture document](docs/architecture.md)** for design rationale, the StateGraph diagram, measured eval results, and the v0.2 roadmap.
+
+## Offline evidence graph dashboard
+
+Select **Evidence graph (offline)** in the Streamlit app to explore report-to-CVE
+mentions, inspect source lines and download a bounded investigation receipt.
+
+- Built using Graphify's actual build/export APIs.
+- Five processed reports, three CVEs and three mention edges in the current snapshot.
+- Python harness enforces an allowed tool, exact plan fields, source verification,
+  at most two navigation hops and 20 returned edges.
+- No API keys, embeddings or model calls for this workspace.
+- Known related-article footer sections are excluded to reduce misleading links.
+
+Run: `python -m streamlit run app.py --server.address 127.0.0.1`.
+
+The graph records literal mentions, not exploitation relationships or proof of
+factual correctness. This is an agent-tool harness foundation; a graph-enabled
+LLM planner and multi-hop RAG answer generation are not implemented.
+
+See [scope, verification, Graphify rebuild and research limits](docs/evidence_graph.md).
 
 ## Highlights (v0.1)
 
@@ -137,7 +157,7 @@ Matching IDs establishes reference membership only. It does not establish
 factual correctness, claim support, retrieval relevance, or correct abstention.
 An uncited refusal can require review too; this check does not interpret refusals.
 
-The offline suite now contains 27 tests. Checks cover unknown and missing IDs,
+The offline suite now contains 41 tests, including the evidence-graph harness and dashboard. Checks cover unknown and missing IDs,
 case and whitespace, full identifiers, inconsistent citation lists, and a high
 model self-score that still fails citation validation.
 

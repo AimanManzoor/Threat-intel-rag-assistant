@@ -5,11 +5,19 @@ from dotenv import load_dotenv
 from src.app_runtime import ROOT, configure_credentials, index_count, initialize_index
 
 st.set_page_config(page_title="Threat-Intel RAG Assistant", page_icon="🛡️", layout="wide")
-load_dotenv(ROOT / ".env")
-missing = configure_credentials(st.secrets)
 
 st.title("🛡️ Threat-Intel RAG Assistant")
 st.caption("Ask questions about the indexed Unit 42 reports and inspect the supporting excerpts.")
+
+workspace = st.radio("Workspace", ("Threat Q&A", "Evidence graph (offline)"),
+                     horizontal=True, key="workspace")
+if workspace == "Evidence graph (offline)":
+    from src.evidence_dashboard import render_evidence_dashboard
+    render_evidence_dashboard(ROOT)
+    st.stop()
+
+load_dotenv(ROOT / ".env")
+missing = configure_credentials(st.secrets)
 
 
 def choose_example(question):

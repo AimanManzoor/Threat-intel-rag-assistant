@@ -226,3 +226,6 @@ data/chroma_db/
 data/chroma_db/
 
 eval/verification_*.json
+
+# Isolated Graphify build environment
+.graph-venv/

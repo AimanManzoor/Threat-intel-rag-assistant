@@ -1,0 +1,2 @@
+# Optional offline graph build dependency; not needed to view the bundled graph.
+graphifyy==0.9.109
