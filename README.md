@@ -39,7 +39,7 @@ CLI: `python -m src.evidence_question --question "Which reports mention CVE-2025
 
 Reference checks: `python -m eval.evaluate_graph_questions`.
 
-Validation: **59 regression tests and 15 controlled source-lookup reference cases**.
+Validation: **66 regression tests and 15 controlled source-lookup reference cases**.
 No model accuracy or general language-understanding score is claimed.
 See [question contract, evaluation and limits](docs/evidence_questions.md).
 
@@ -176,7 +176,7 @@ Matching IDs establishes reference membership only. It does not establish
 factual correctness, claim support, retrieval relevance, or correct abstention.
 An uncited refusal can require review too; this check does not interpret refusals.
 
-The offline suite now contains 59 tests, including the evidence-graph harness and dashboard. Checks cover unknown and missing IDs,
+The offline suite now contains 66 tests, including the evidence-graph harness and dashboard. Checks cover unknown and missing IDs,
 case and whitespace, full identifiers, inconsistent citation lists, and a high
 model self-score that still fails citation validation.
 
@@ -195,3 +195,12 @@ briefs with source references, excerpts, scope limits and review prompts.
 No additional provider or retrieval calls are made.
 
 See [brief format and limitations](docs/analyst_brief.md).
+
+
+## Corpus-quality dashboard
+
+Select Corpus quality (offline) to inspect index-eligible files, declared metadata,
+source fingerprints, duplicate-body candidates and footer-only CVE occurrences.
+The audit is read-only and does not establish index readiness or factual accuracy.
+
+See [audit scope and limitations](docs/corpus_quality.md).
