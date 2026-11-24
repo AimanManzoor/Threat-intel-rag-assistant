@@ -1,0 +1,58 @@
+.evidence-map {
+  margin: 30px 0;
+  padding: 20px;
+  background: #142033;
+  border: 1px solid #34445e;
+  border-radius: 12px;
+}
+
+.graph-scroll {
+  overflow-x: auto;
+}
+
+.evidence-map svg {
+  display: block;
+  width: 100%;
+  min-width: 740px;
+}
+
+.evidence-map .connection {
+  stroke: #526881;
+  stroke-width: 2;
+  fill: none;
+}
+
+.evidence-map .connection.selected {
+  stroke: #81ead2;
+  stroke-width: 4;
+}
+
+.evidence-map .report-box {
+  fill: #203450;
+  stroke: #7693b5;
+}
+
+.evidence-map .cve-box {
+  fill: #153b37;
+  stroke: #81ead2;
+}
+
+.evidence-map .cve-node {
+  cursor: pointer;
+}
+
+.evidence-map .cve-node.selected .cve-box {
+  fill: #265e54;
+  stroke-width: 3;
+}
+
+.evidence-map .cve-node:focus-visible .cve-box {
+  stroke: white;
+  stroke-width: 4;
+}
+
+.evidence-map text {
+  fill: #eef4fc;
+  font: 15px system-ui, sans-serif;
+  pointer-events: none;
+}

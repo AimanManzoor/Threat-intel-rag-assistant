@@ -226,3 +226,26 @@ source fingerprints, duplicate-body candidates and footer-only CVE occurrences.
 The audit is read-only and does not establish index readiness or factual accuracy.
 
 See [audit scope and limitations](docs/corpus_quality.md).
+
+## Interactive HTML evidence explorer
+
+Explore public report-to-CVE mention connections through an interactive map.
+Select a CVE to highlight its connections and inspect matching report excerpts,
+source files and line references.
+
+The dashboard uses a saved, verified evidence snapshot and makes zero AI calls.
+Connections represent literal mentions, not proof of exploitation or severity.
+
+### Run locally
+
+From the repository root:
+
+```bash
+python3 -m dashboard.export_data
+python3 -m http.server 8000 --bind 127.0.0.1 --directory dashboard
+```
+
+Open http://127.0.0.1:8000 in your browser.
+Press Control+C to stop the server.
+
+Public hosting is the next milestone; this local address works only on your computer.

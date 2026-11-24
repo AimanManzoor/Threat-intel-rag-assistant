@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Threat Intel — Evidence Explorer</title>
+
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: system-ui, sans-serif;
+      background: #0b1220;
+      color: #eef4fc;
+    }
+
+    body {
+      max-width: 1050px;
+      margin: auto;
+      padding: 32px 20px;
+      line-height: 1.6;
+    }
+
+    h1 { margin-bottom: 8px; }
+    h2 { font-size: 1.2rem; }
+    .muted { color: #afbed0; }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin: 28px 0;
+    }
+
+    .card, article {
+      background: #142033;
+      border: 1px solid #34445e;
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .number {
+      display: block;
+      font-size: 2rem;
+      color: #81ead2;
+      font-weight: 650;
+    }
+
+    label { display: block; margin-bottom: 8px; }
+
+    select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      background: #142033;
+      color: #eef4fc;
+      border: 1px solid #60738e;
+      font: inherit;
+    }
+
+    select:focus-visible {
+      outline: 3px solid #81ead2;
+      outline-offset: 3px;
+    }
+
+    article { margin-top: 18px; }
+
+    blockquote {
+      margin: 16px 0;
+      padding: 12px 16px;
+      border-left: 3px solid #81ead2;
+      background: #0b1626;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    code { overflow-wrap: anywhere; }
+    footer { margin-top: 36px; font-size: .9rem; }
+  </style>
+
+  <script src="data.js" defer></script>
+  <script src="app.js" defer></script>
+  <link rel="stylesheet" href="graph.css">
+  <script src="graph.js" defer></script>
+</head>
+
+<body>
+  <header>
+    <p class="muted">THREAT INTEL RAG ASSISTANT</p>
+    <h1>Explore the evidence behind a CVE</h1>
+    <p class="muted">
+      Interactive exploration of saved public reports.
+      This is not a live threat feed or an AI chatbot.
+    </p>
+  </header>
+
+  <section class="metrics" aria-label="Corpus summary">
+    <div class="card">
+      <span class="number" id="reports">—</span>
+      Public reports
+    </div>
+
+    <div class="card">
+      <span class="number" id="cves">—</span>
+      CVEs in report bodies
+    </div>
+
+    <div class="card">
+      <span class="number" id="connections">—</span>
+      Mention connections
+    </div>
+
+    <div class="card">
+      <span class="number">0</span>
+      AI calls from this page
+    </div>
+  </section>
+
+  <main>
+    <label for="cve-select">Choose a CVE to inspect its source evidence</label>
+    <select id="cve-select">
+      <option value="">Select an identifier</option>
+    </select>
+
+    <p id="status" class="muted" role="status" aria-live="polite">
+      Loading saved evidence…
+    </p>
+
+    <section id="results" aria-label="Matching evidence"></section>
+  </main>
+
+  <footer class="muted">
+    <p>
+      Connections represent literal report-body mentions.
+      They do not independently establish exploitation, severity or current status.
+      Human review is required.
+    </p>
+    <p>Evidence graph fingerprint: <code id="fingerprint">—</code></p>
+  </footer>
+</body>
+</html>
