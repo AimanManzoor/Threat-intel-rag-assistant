@@ -45,3 +45,13 @@ def render_question_search(root, artifact_sha256):
         file_name="threat_source_lookup.json", mime="application/json",
         key="download_source_lookup",
     )
+
+    if report["status"] in {"completed", "no_matches"}:
+        from src.analyst_brief import make_brief
+        st.download_button(
+            "Download analyst evidence brief",
+            make_brief(report),
+            file_name="threat_analyst_brief.txt",
+            mime="text/plain",
+            key="download_analyst_brief",
+        )
