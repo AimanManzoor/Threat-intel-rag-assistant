@@ -9,7 +9,7 @@ st.set_page_config(page_title="Threat-Intel RAG Assistant", page_icon="🛡️",
 st.title("🛡️ Threat-Intel RAG Assistant")
 st.caption("Ask questions about the indexed Unit 42 reports and inspect the supporting excerpts.")
 
-workspace = st.radio("Workspace", ("Threat Q&A", "Evidence graph (offline)", "Corpus quality (offline)"),
+workspace = st.radio("Workspace", ("Threat Q&A", "Evidence graph (offline)", "Corpus quality (offline)", "Budgeted assistant (opt-in)"),
                      horizontal=True, key="workspace")
 if workspace == "Evidence graph (offline)":
     from src.evidence_dashboard import render_evidence_dashboard
@@ -19,6 +19,11 @@ if workspace == "Evidence graph (offline)":
 if workspace == "Corpus quality (offline)":
     from src.corpus_quality import render_dashboard
     render_dashboard(ROOT)
+    st.stop()
+
+if workspace == "Budgeted assistant (opt-in)":
+    from src.budgeted_ui import render_budgeted
+    render_budgeted(ROOT)
     st.stop()
 
 load_dotenv(ROOT / ".env")

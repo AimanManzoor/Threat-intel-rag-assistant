@@ -39,9 +39,31 @@ CLI: `python -m src.evidence_question --question "Which reports mention CVE-2025
 
 Reference checks: `python -m eval.evaluate_graph_questions`.
 
-Validation: **66 regression tests and 15 controlled source-lookup reference cases**.
+Validation: **82 regression tests and 15 controlled source-lookup reference cases**.
 No model accuracy or general language-understanding score is claimed.
 See [question contract, evaluation and limits](docs/evidence_questions.md).
+
+## Budgeted assistant (opt-in)
+
+A fixed request controller routes exact-CVE source lookups to the existing
+zero-provider graph path. Optional paid RAG permits one embedding, one rerank and
+one generation operation, with SDK retries disabled, at most four source excerpts,
+8000 serialized context characters and 1024 output tokens.
+
+Unknown sources and excerpts outside approved report bodies are rejected. A model
+response must use allowed source IDs and supporting quotes matched to the supplied
+context after whitespace normalization; incomplete/invalid responses are withheld without automatic regeneration.
+Quote membership does not establish claim support: generated candidates always
+require human review.
+
+Select **Budgeted assistant (opt-in)** in the app. Paid RAG is server-disabled by default: the owner must enable
+`THREAT_ENABLE_PAID_RAG` for a controlled private test. A request also requires the
+paid checkbox, existing provider credentials and an available model ID.
+This flag does not govern the legacy Threat Q&A workspace.
+No live accuracy improvement or billing savings have been measured.
+
+See [request policy, setup, tests and limits](docs/budgeted_assistant.md).
+Current offline coverage: **82 regression tests and 15 source-question reference cases**.
 
 ## Highlights (v0.1)
 
@@ -176,7 +198,7 @@ Matching IDs establishes reference membership only. It does not establish
 factual correctness, claim support, retrieval relevance, or correct abstention.
 An uncited refusal can require review too; this check does not interpret refusals.
 
-The offline suite now contains 66 tests, including the evidence-graph harness and dashboard. Checks cover unknown and missing IDs,
+The offline suite now contains 82 tests, including the evidence-graph harness and dashboard. Checks cover unknown and missing IDs,
 case and whitespace, full identifiers, inconsistent citation lists, and a high
 model self-score that still fails citation validation.
 
