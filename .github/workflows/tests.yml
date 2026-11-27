@@ -37,3 +37,7 @@ jobs:
 
       - name: Evaluate source-question reference cases
         run: python -m eval.evaluate_graph_questions
+
+      - name: Check dashboard snapshot freshness
+        run: python -m dashboard.export_data --check
+

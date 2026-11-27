@@ -249,3 +249,19 @@ Open http://127.0.0.1:8000 in your browser.
 Press Control+C to stop the server.
 
 Public hosting is the next milestone; this local address works only on your computer.
+
+## Dashboard evidence freshness
+
+The dashboard exporter verifies the graph against its approved source reports.
+GitHub Actions also checks that the committed dashboard snapshot matches the
+verified export. Missing, stale or edited snapshot data fails the check.
+
+Check without changing files:
+`python -m dashboard.export_data --check`
+
+Rebuild after reviewing source changes:
+`python -m dashboard.export_data`
+
+If source hashes no longer match the graph, review and rebuild the evidence
+graph first. A snapshot match establishes consistency with the scoped corpus,
+not factual accuracy, current threat status or source authenticity.
